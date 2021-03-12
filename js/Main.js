@@ -10,5 +10,4 @@ const en1 = new Sprite({ x: 140, y: 100, w: 30, h: 30, color: "red" });
 
 cena1.adicionar(pc);
 cena1.adicionar(en1);
-
-cena1.desenhar();
+cena1.quadro(0);

@@ -2,9 +2,17 @@ export default class Sprite {
     /*
         É responsável por modelar algo na tela.
     */
-    constructor({x = 100, y = 100, w=20, h=20, color="white", vx=0, vy=0}={}) {
-        this.vx = x;
-        this.vy = y;
+    constructor({
+        x = 100,
+        y = 100,
+        w = 20,
+        h = 20,
+        color = "white",
+        vx = 0,
+        vy = 0,
+    } = {}) {
+        this.vx = vx;
+        this.vy = vy;
         this.x = x;
         this.y = y;
         this.width = w;
@@ -16,8 +24,8 @@ export default class Sprite {
         ctx.fillStyle = this.color;
         ctx.fillRect(this.x, this.y, this.width, this.height);
     }
-    passo(dt){
-        this.x = this.x * this.vx * dt;
-        this.y = this.y * this.vy * dt;
+    passo(dt) {
+        this.x = this.x + this.vx * dt;
+        this.y = this.y + this.vy * dt;
     }
 }
