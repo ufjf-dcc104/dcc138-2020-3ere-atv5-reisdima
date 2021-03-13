@@ -54,4 +54,31 @@ export default class Sprite {
             this.y + this.height / 2 < outro.y - outro.height
         );
     }
+
+    aplicaRestricoes(dt) {
+        const SIZE = this.cena.mapa.SIZE;
+        if (this.vx > 0) {
+            const pmx = this.mx + 1;
+            const pmy = this.my;
+            if (this.cena.mapa.tiles[pmy][pmx] != 0) {
+                const tile = {
+                    x: pmx * SIZE + SIZE / 2,
+                    y: pmy * SIZE + SIZE / 2,
+                    width: SIZE,
+                    height: SIZE,
+                };
+                this.cena.ctx.strokeStyle = "white";
+                this.cena.ctx.strokeRect(
+                    tile.x - SIZE / 2,
+                    tile.y - SIZE / 2,
+                    SIZE,
+                    SIZE
+                );
+                if (this.colidiuCom(tile)) {
+                    this.vx = 0;
+                    this.x = tile.x - tile.width / 2 - this.width / 2 - 1;
+                }
+            }
+        }
+    }
 }

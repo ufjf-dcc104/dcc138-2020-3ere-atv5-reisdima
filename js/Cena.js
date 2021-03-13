@@ -23,6 +23,7 @@ export default class Cena {
             for (let s = 0; s < this.sprites.length; s++) {
                 const sprite = this.sprites[s];
                 sprite.desenhar(this.ctx);
+                sprite.aplicaRestricoes();
             }
             this.ctx.fillStyle = "yellow";
             this.ctx.fillText(this.assets?.progresso(), 10, 20);
