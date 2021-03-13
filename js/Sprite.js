@@ -18,6 +18,9 @@ export default class Sprite {
         this.width = w;
         this.height = h;
         this.color = color;
+        this.cena = null;
+        this.mx = 0;
+        this.my = 0;
     }
 
     desenhar(ctx) {
@@ -28,10 +31,19 @@ export default class Sprite {
             this.width,
             this.height
         );
+        ctx.strokeStyle = "blue";
+        ctx.strokeRect(
+            this.mx * this.cena.mapa.SIZE,
+            this.my * this.cena.mapa.SIZE,
+            this.cena.mapa.SIZE,
+            this.cena.mapa.SIZE
+        );
     }
     passo(dt) {
         this.x = this.x + this.vx * dt;
         this.y = this.y + this.vy * dt;
+        this.mx = Math.floor(this.x / this.cena.mapa.SIZE);
+        this.my = Math.floor(this.y / this.cena.mapa.SIZE);
     }
 
     colidiuCom(outro) {
