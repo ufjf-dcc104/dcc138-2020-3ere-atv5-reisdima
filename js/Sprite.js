@@ -51,15 +51,17 @@ export default class Sprite {
             this.x - this.width / 2 > outro.x + outro.width / 2 ||
             this.x + this.width / 2 < outro.x - outro.width / 2 ||
             this.y - this.height / 2 > outro.y + outro.height / 2 ||
-            this.y + this.height / 2 < outro.y - outro.height
+            this.y + this.height / 2 < outro.y - outro.height / 2
         );
     }
 
     aplicaRestricoes(dt) {
         this.aplicaRestricoesDireita(dt);
         this.aplicaRestricoesEsquerda(dt);
+        this.aplicaRestricoesCima(dt);
+        this.aplicaRestricoesBaixo(dt);
     }
-    
+
     aplicaRestricoesDireita(dt) {
         const SIZE = this.cena.mapa.SIZE;
         if (this.vx > 0) {
@@ -78,18 +80,18 @@ export default class Sprite {
                     tile.y - SIZE / 2,
                     SIZE,
                     SIZE
-                    );
-                    if (this.colidiuCom(tile)) {
-                        this.vx = 0;
-                        this.x = tile.x - tile.width / 2 - this.width / 2 - 1;
-                    }
+                );
+                if (this.colidiuCom(tile)) {
+                    this.vx = 0;
+                    this.x = tile.x - tile.width / 2 - this.width / 2 - 1;
                 }
             }
         }
-        
-        aplicaRestricoesEsquerda(dt) {
-            const SIZE = this.cena.mapa.SIZE;
-            if (this.vx < 0) {
+    }
+
+    aplicaRestricoesEsquerda(dt) {
+        const SIZE = this.cena.mapa.SIZE;
+        if (this.vx < 0) {
             const pmx = this.mx - 1;
             const pmy = this.my;
             if (this.cena.mapa.tiles[pmy][pmx] != 0) {
@@ -109,6 +111,59 @@ export default class Sprite {
                 if (this.colidiuCom(tile)) {
                     this.vx = 0;
                     this.x = tile.x + tile.width / 2 + this.width / 2 + 1;
+                }
+            }
+        }
+    }
+    aplicaRestricoesBaixo(dt) {
+        const SIZE = this.cena.mapa.SIZE;
+        if (this.vy > 0) {
+            const pmx = this.mx;
+            const pmy = this.my + 1;
+            if (this.cena.mapa.tiles[pmy][pmx] != 0) {
+                const tile = {
+                    x: pmx * SIZE + SIZE / 2,
+                    y: pmy * SIZE + SIZE / 2,
+                    width: SIZE,
+                    height: SIZE,
+                };
+                this.cena.ctx.strokeStyle = "white";
+                this.cena.ctx.strokeRect(
+                    tile.x - SIZE / 2,
+                    tile.y - SIZE / 2,
+                    SIZE,
+                    SIZE
+                );
+                if (this.colidiuCom(tile)) {
+                    this.vy = 0;
+                    this.y = tile.y - tile.height / 2 - this.height / 2 - 1;
+                }
+            }
+        }
+    }
+
+    aplicaRestricoesCima(dt) {
+        const SIZE = this.cena.mapa.SIZE;
+        if (this.vy < 0) {
+            const pmx = this.mx;
+            const pmy = this.my - 1;
+            if (this.cena.mapa.tiles[pmy][pmx] != 0) {
+                const tile = {
+                    x: pmx * SIZE + SIZE / 2,
+                    y: pmy * SIZE + SIZE / 2,
+                    width: SIZE,
+                    height: SIZE,
+                };
+                this.cena.ctx.strokeStyle = "white";
+                this.cena.ctx.strokeRect(
+                    tile.x - SIZE / 2,
+                    tile.y - SIZE / 2,
+                    SIZE,
+                    SIZE
+                );
+                if (this.colidiuCom(tile)) {
+                    this.vy = 0;
+                    this.y = tile.y + tile.height / 2 + this.height / 2 + 1;
                 }
             }
         }

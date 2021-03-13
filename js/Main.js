@@ -29,13 +29,15 @@ const mapa1 = new Mapa(10, 14, 32);
 mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
-const pc = new Sprite({x: 50,  vx: 10 });
-const en1 = new Sprite({ x: 140, y: 100, color: "red", vx: -10 });
-const en2 = new Sprite({ y: 70, color: "red" });
+const pc = new Sprite({x: 50});
+const en1 = new Sprite({ x: 140, y: 100, color: "red", vx: 0 });
+const en2 = new Sprite({ x: 115, y: 40, color: "red", vy: 10 });
+const en3 = new Sprite({ x: 115, y: 160, color: "red", vy: -10 });
 
 cena1.adicionar(pc);
 cena1.adicionar(en1);
 cena1.adicionar(en2);
+cena1.adicionar(en3);
 cena1.iniciar();
 
 document.addEventListener("keydown", (e) => {
