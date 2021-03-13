@@ -28,4 +28,13 @@ export default class Sprite {
         this.x = this.x + this.vx * dt;
         this.y = this.y + this.vy * dt;
     }
+
+    colidiuCom(outro) {
+        return !(
+            this.x > outro.x + outro.width ||
+            this.x + this.width < outro.x ||
+            this.y > outro.y + outro.height ||
+            this.y + this.height < outro.y
+        );
+    }
 }
