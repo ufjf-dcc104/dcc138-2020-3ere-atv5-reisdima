@@ -30,7 +30,7 @@ mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
 const pc = new Sprite({x: 50,  vx: 10 });
-const en1 = new Sprite({ x: 140, y: 100, color: "red" });
+const en1 = new Sprite({ x: 140, y: 100, color: "red", vx: -10 });
 const en2 = new Sprite({ y: 70, color: "red" });
 
 cena1.adicionar(pc);
