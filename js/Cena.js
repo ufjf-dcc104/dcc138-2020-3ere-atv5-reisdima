@@ -82,5 +82,6 @@ export default class Cena {
                 this.sprites.splice(index, 1);
             }
         }
+        this.aRemover = [];
     }
 }
