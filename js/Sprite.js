@@ -22,7 +22,12 @@ export default class Sprite {
 
     desenhar(ctx) {
         ctx.fillStyle = this.color;
-        ctx.fillRect(this.x, this.y, this.width, this.height);
+        ctx.fillRect(
+            this.x - this.width / 2,
+            this.y - this.height / 2,
+            this.width,
+            this.height
+        );
     }
     passo(dt) {
         this.x = this.x + this.vx * dt;
@@ -31,10 +36,10 @@ export default class Sprite {
 
     colidiuCom(outro) {
         return !(
-            this.x > outro.x + outro.width ||
-            this.x + this.width < outro.x ||
-            this.y > outro.y + outro.height ||
-            this.y + this.height < outro.y
+            this.x - this.width / 2 > outro.x + outro.width / 2 ||
+            this.x + this.width / 2 < outro.x - outro.width / 2 ||
+            this.y - this.height / 2 > outro.y + outro.height / 2 ||
+            this.y + this.height / 2 < outro.y - outro.height
         );
     }
 }
