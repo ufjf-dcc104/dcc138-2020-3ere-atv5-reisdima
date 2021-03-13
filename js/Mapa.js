@@ -34,6 +34,23 @@ export default class Mapa {
                             this.SIZE
                         );
                         break;
+                    case 2:
+                        ctx.fillStyle = "red";
+                        ctx.fillRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
+                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = "white";
+                        ctx.strokeRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
+                        break;
                     default:
                         ctx.fillStyle = "black";
                         ctx.fillRect(
