@@ -15,7 +15,6 @@ export default class Mapa {
 
     desenhar(ctx) {
         for (let l = 0; l < this.LINHAS; l++) {
-            this.tiles[l] = [];
             for (let c = 0; c < this.COLUNAS; c++) {
                 switch (this.tiles[l][c]) {
                     case 1:
@@ -52,8 +51,19 @@ export default class Mapa {
                             this.SIZE
                         );
                         break;
-                        break;
                 }
+            }
+        }
+    }
+
+    carregaMapa(modelo) {
+        this.LINHAS = modelo.length;
+        this.COLUNAS = modelo[0]?.length ?? 0;
+        this.tiles = [];
+        for (let l = 0; l < this.LINHAS; l++) {
+            this.tiles[l] = [];
+            for (let c = 0; c < this.COLUNAS; c++) {
+                this.tiles[l][c] = modelo[l][c];
             }
         }
     }

@@ -3,6 +3,7 @@ import Cena from "./Cena.js";
 import Mapa from "./Mapa.js";
 import Mixer from "./Mixer.js";
 import Sprite from "./Sprite.js";
+import {mapa1 as modeloMapa1} from "../maps/mapa1.js"
 
 const mixer = new Mixer(10);
 const assets = new AssetManager(mixer);
@@ -25,6 +26,7 @@ const ctx = canvas.getContext("2d");
 const cena1 = new Cena(canvas, assets);
 
 const mapa1 = new Mapa(10, 14, 32);
+mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
 const pc = new Sprite({ vx: 10 });
