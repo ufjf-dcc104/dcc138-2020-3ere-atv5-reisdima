@@ -15,6 +15,8 @@ export default class Cena {
         this.idAnim = null;
         this.assets = assets;
         this.mapa = null;
+        this.spawnTimer = 0;
+        this.spawnWaitTime = 4;
     }
 
     desenhar() {
@@ -48,7 +50,11 @@ export default class Cena {
     quadro(t) {
         this.t0 = this.t0 ?? t;
         this.dt = (t - this.t0) / 1000;
-        // console.log(this.t0);
+        this.spawnTimer += this.dt;
+        if(this.spawnTimer >= this.spawnWaitTime){
+            this.criaSpriteAleatorio();
+            this.spawnTimer = 0;
+        }
         this.passo(this.dt);
         this.desenhar();
         this.checaColisao();
