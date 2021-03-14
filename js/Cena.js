@@ -92,6 +92,7 @@ export default class Cena {
         if (!this.aRemover.includes(b)) {
             this.aRemover.push(b);
         }
+        this.assets.play("boom");
     }
 
     removerSprites() {
