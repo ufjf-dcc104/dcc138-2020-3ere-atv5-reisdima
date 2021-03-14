@@ -21,30 +21,58 @@ export default class Mapa {
                         ctx.fillStyle = "grey";
                         ctx.lineWidth = 1;
                         ctx.strokeStyle = "black";
+                        ctx.fillRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
+                        ctx.strokeRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
                         break;
                     case 2:
                         ctx.fillStyle = "red";
                         ctx.lineWidth = 1;
                         ctx.strokeStyle = "white";
+                        ctx.fillRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
+                        ctx.strokeRect(
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        );
+                        break;
+                    case 3:
+                        ctx.drawImage(
+                            this.cena.assets.img("water"),
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        )
                         break;
                     default:
-                        ctx.fillStyle = "black";
-                        ctx.lineWidth = 1;
-                        ctx.strokeStyle = "grey";
+                        ctx.drawImage(
+                            this.cena.assets.img("grass"),
+                            c * this.SIZE,
+                            l * this.SIZE,
+                            this.SIZE,
+                            this.SIZE
+                        )
+                        // ctx.fillStyle = "black";
+                        // ctx.lineWidth = 1;
+                        // ctx.strokeStyle = "grey";
                         break;
                 }
-                ctx.fillRect(
-                    c * this.SIZE,
-                    l * this.SIZE,
-                    this.SIZE,
-                    this.SIZE
-                );
-                ctx.strokeRect(
-                    c * this.SIZE,
-                    l * this.SIZE,
-                    this.SIZE,
-                    this.SIZE
-                );
             }
         }
     }
