@@ -1,3 +1,5 @@
+import Sprite from "./Sprite.js";
+
 export default class Cena {
     /**
         É responsável por desenhar elementos na tela
@@ -12,7 +14,7 @@ export default class Cena {
         this.dt = 0;
         this.idAnim = null;
         this.assets = assets;
-        this.mapa  = null;
+        this.mapa = null;
     }
 
     desenhar() {
@@ -46,7 +48,7 @@ export default class Cena {
     quadro(t) {
         this.t0 = this.t0 ?? t;
         this.dt = (t - this.t0) / 1000;
-
+        // console.log(this.t0);
         this.passo(this.dt);
         this.desenhar();
         this.checaColisao();
@@ -96,8 +98,49 @@ export default class Cena {
         this.aRemover = [];
     }
 
-    configuraMapa(mapa){
+    configuraMapa(mapa) {
         this.mapa = mapa;
         this.mapa.cena = this;
+    }
+
+    criaSpriteAleatorio() {
+        let mx = 0;
+        let my = 0;
+        let l = 0;
+        let c = 0;
+        try {
+            while (this.mapa.tiles[l][c] !== 0) {
+                c = Math.floor(Math.random() * this.mapa.COLUNAS);
+                l = Math.floor(Math.random() * this.mapa.LINHAS);
+            }
+            mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
+            my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
+            let behavior = Math.floor(Math.random() * 4);
+            let vx = 0;
+            let vy = 0;
+            switch (behavior) {
+                case 0:
+                    vx = 10;
+                    break;
+                case 1:
+                    vx = -10;
+                    break;
+                case 2:
+                    vy = 10;
+                    break;
+                case 3:
+                    vy = -10;
+                    break;
+                default:
+                    break;
+            }
+            const sprite = new Sprite({ x: mx, y: my, color: "red", vx, vy });
+            this.adicionar(sprite);
+        } catch (error) {
+            console.log("c: " + c);
+            console.log("l: " + l);
+            console.log(this.mapa.tiles);
+            console.log(error);
+        }
     }
 }
