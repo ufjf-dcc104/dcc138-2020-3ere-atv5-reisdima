@@ -9,7 +9,7 @@ export default class Game {
 
     adicionarCena(chave, cena){
         this.cenas.set(chave, cena);
-        cena.Game = this;
+        cena.game = this;
         cena.canvas = this.canvas;
         cena.assets = this.assets;
         cena.input = this.input;
@@ -20,7 +20,9 @@ export default class Game {
 
     selecionaCena(chave){
         if(this.cenas.has(chave)){
+            this.parar();
             this.cena = this.cenas.get(chave);
+            this.iniciar();
         }
     }
 
