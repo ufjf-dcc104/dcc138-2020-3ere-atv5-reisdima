@@ -56,18 +56,28 @@ pc.controlar = function (dt) {
         this.vy = 0;
     }
 };
-// const en1 = new Sprite({ x: 140, y: 100, color: "red", vx: 0 });
-// const en2 = new Sprite({ x: 115, y: 40, color: "red", vy: 10 });
-// const en3 = new Sprite({ x: 115, y: 160, color: "red", vy: -10 });
-
 cena1.adicionar(pc);
-cena1.criaSpriteAleatorio();
-cena1.criaSpriteAleatorio();
-cena1.criaSpriteAleatorio();
-cena1.criaSpriteAleatorio();
-// cena1.adicionar(en1);
-// cena1.adicionar(en2);
-// cena1.adicionar(en3);
+
+function perseguePC(dt){
+    this.vx = 15 * Math.sign(pc.x - this.x);
+    this.vy = 15 * Math.sign(pc.y - this.y);
+}
+// const en1 = new Sprite({ x: 140, y: 100, color: "red", perseguePC });
+// const en2 = new Sprite({ x: 115, y: 40, color: "red", perseguePC });
+// const en3 = new Sprite({ x: 115, y: 160, color: "red", perseguePC });
+const en1 = new Sprite({ x: 145, y: 110, color: "red", controlar: perseguePC });
+const en2 = new Sprite({ x: 115, y: 45, color: "red", controlar: perseguePC });
+const en3 = new Sprite({ x: 145, y: 160, color: "red", controlar: perseguePC });
+cena1.adicionar(en1);
+cena1.adicionar(en2);
+cena1.adicionar(en3);
+
+// cena1.criaSpriteAleatorio();
+// cena1.criaSpriteAleatorio();
+// cena1.criaSpriteAleatorio();
+// cena1.criaSpriteAleatorio();
+// criaSpriteAleatorio();
+
 cena1.iniciar();
 
 document.addEventListener("keydown", (e) => {
@@ -88,3 +98,50 @@ document.addEventListener("keydown", (e) => {
             break;
     }
 });
+
+
+
+function criaSpriteAleatorio() {
+    let mx = 0;
+    let my = 0;
+    let l = 0;
+    let c = 0;
+    try {
+        while (cena1.mapa.tiles[l][c] !== 0) {
+            c = Math.floor(Math.random() * cena1.mapa.COLUNAS);
+            l = Math.floor(Math.random() * cena1.mapa.LINHAS);
+        }
+        mx = c * cena1.mapa.SIZE + cena1.mapa.SIZE / 2;
+        my = l * cena1.mapa.SIZE + cena1.mapa.SIZE / 2;
+        let behavior = Math.floor(Math.random() * 4);
+        let vx = 0;
+        let vy = 0;
+        switch (behavior) {
+            case 0:
+                vx = 10;
+                break;
+            case 1:
+                vx = -10;
+                break;
+            case 2:
+                vy = 10;
+                break;
+            case 3:
+                vy = -10;
+                break;
+            default:
+                break;
+        }
+        function perseguePC(dt){
+            this.vx = 15 * Math.sign(pc.x - this.x);
+            this.vy = 15 * Math.sign(pc.y - this.y);
+        }
+        const sprite = new Sprite({ x: mx, y: my, color: "red", vx, vy, perseguePC });
+        cena1.adicionar(sprite);
+    } catch (error) {
+        console.log("c: " + c);
+        console.log("l: " + l);
+        console.log(this.mapa.tiles);
+        console.log(error);
+    }
+}
