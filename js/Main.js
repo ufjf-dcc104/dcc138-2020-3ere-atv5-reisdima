@@ -38,6 +38,15 @@ mapa1.carregaMapa(modeloMapa1);
 cena1.configuraMapa(mapa1);
 
 const pc = new Sprite({ vx: 0, x: 50, y: 90 });
+pc.controlar = function (dt) {
+    if (input.comandos.get("MOVE_ESQUERDA")) {
+        this.vx = -50;
+    } else if (input.comandos.get("MOVE_DIREITA")) {
+        this.vx = 50;
+    } else {
+        this.vx = 0;
+    }
+};
 // const en1 = new Sprite({ x: 140, y: 100, color: "red", vx: 0 });
 // const en2 = new Sprite({ x: 115, y: 40, color: "red", vy: 10 });
 // const en3 = new Sprite({ x: 115, y: 160, color: "red", vy: -10 });
