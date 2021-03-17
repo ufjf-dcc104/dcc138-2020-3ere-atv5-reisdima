@@ -7,6 +7,7 @@ export default class Cena {
      */
     constructor(canvas, assets = null) {
         this.canvas = canvas;
+        this.game = null;
         this.ctx = canvas.getContext("2d");
         this.sprites = [];
         this.aRemover = [];
