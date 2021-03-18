@@ -1,9 +1,9 @@
 import Cena from "./Cena.js";
-import Sprite from "./Sprite.js";
-import Mapa from "./Mapa.js";
-import { mapa1 as modeloMapa1 } from "../maps/mapa1.js";
+import Sprite from "../Sprite.js";
+import Mapa from "../Mapa.js";
+import { mapa1 as modeloMapa1 } from "../../maps/mapa1.js";
 
-export default class CenaJogo extends Cena {
+export default class CenaFase1 extends Cena {
     quandoColidir(a, b) {
         if (!this.aRemover.includes(a)) {
             this.aRemover.push(a);
@@ -18,8 +18,20 @@ export default class CenaJogo extends Cena {
         }
     }
 
+    quadro(t) {
+        super.quadro(t);
+        this.spawnTimer += this.dt;
+        if (this.spawnTimer >= this.spawnWaitTime) {
+            this.criaSpriteAleatorio();
+            this.spawnTimer = 0;
+        }
+    }
+
     preparar() {
         super.preparar();
+        this.pc = null;
+        this.spawnTimer = 0;
+        this.spawnWaitTime = 4;
         const mapa1 = new Mapa(10, 14, 32);
         mapa1.carregaMapa(modeloMapa1);
         this.configuraMapa(mapa1);
@@ -43,6 +55,7 @@ export default class CenaJogo extends Cena {
                 this.vy = 0;
             }
         };
+        this.pc = pc;
         this.adicionar(pc);
 
         function perseguePC(dt) {
@@ -82,5 +95,51 @@ export default class CenaJogo extends Cena {
         // this.criaSpriteAleatorio();
         // this.criaSpriteAleatorio();
         // criaSpriteAleatorio();
+    }
+
+    criaSpriteAleatorio() {
+        let mx = 0;
+        let my = 0;
+        let l = 0;
+        let c = 0;
+        try {
+            while (this.mapa.tiles[l][c] !== 0) {
+                c = Math.floor(Math.random() * this.mapa.COLUNAS);
+                l = Math.floor(Math.random() * this.mapa.LINHAS);
+            }
+            mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
+            my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
+            let behavior = Math.floor(Math.random() * 4);
+            let vx = 0;
+            let vy = 0;
+            switch (behavior) {
+                case 0:
+                    vx = 10;
+                    break;
+                case 1:
+                    vx = -10;
+                    break;
+                case 2:
+                    vy = 10;
+                    break;
+                case 3:
+                    vy = -10;
+                    break;
+                default:
+                    break;
+            }
+            let pc = this.pc;
+            function perseguePC(dt) {
+                this.vx = 15 * Math.sign(pc.x - this.x);
+                this.vy = 15 * Math.sign(pc.y - this.y);
+            }
+            const sprite = new Sprite({ x: mx, y: my, color: "red", vx, vy, controlar: perseguePC });
+            this.adicionar(sprite);
+        } catch (error) {
+            console.log("c: " + c);
+            console.log("l: " + l);
+            console.log(this.mapa.tiles);
+            console.log(error);
+        }
     }
 }
