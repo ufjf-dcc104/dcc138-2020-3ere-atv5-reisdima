@@ -5,16 +5,34 @@ import { mapa1 as modeloMapa1 } from "../../maps/mapa1.js";
 
 export default class CenaFase1 extends Cena {
     quandoColidir(a, b) {
-        if (!this.aRemover.includes(a)) {
-            this.aRemover.push(a);
-        }
-        if (!this.aRemover.includes(b)) {
-            this.aRemover.push(b);
-        }
-        this.assets.play("boom");
         if (a.tags.has("pc") && b.tags.has("enemy")) {
+            if (!this.aRemover.includes(a)) {
+                this.aRemover.push(a);
+            }
+            if (!this.aRemover.includes(b)) {
+                this.aRemover.push(b);
+            }
+            this.assets.play("boom");
             this.rodando = false;
             this.game.selecionaCena("fim");
+            return;
+        }
+        if (a.tags.has("enemy") && b.tags.has("enemy")) {
+            if (!this.aRemover.includes(a)) {
+                this.aRemover.push(a);
+            }
+            if (!this.aRemover.includes(b)) {
+                this.aRemover.push(b);
+            }
+            this.assets.play("boom");
+            return;
+        }
+        if (a.tags.has("pc") && b.tags.has("coin")) {
+            if (!this.aRemover.includes(b)) {
+                this.aRemover.push(b);
+            }
+            this.moedasColetadas += 1;
+            this.assets.play("coin");
         }
     }
 
@@ -22,7 +40,7 @@ export default class CenaFase1 extends Cena {
         super.quadro(t);
         this.spawnTimer += this.dt;
         if (this.spawnTimer >= this.spawnWaitTime) {
-            this.criaSpriteAleatorio();
+            this.criarInimigoAleatorio();
             this.spawnTimer = 0;
         }
     }
@@ -32,6 +50,8 @@ export default class CenaFase1 extends Cena {
         this.pc = null;
         this.spawnTimer = 0;
         this.spawnWaitTime = 4;
+        this.moedasTotais = 4;
+        this.moedasColetadas = 0;
         const mapa1 = new Mapa(10, 14, 32);
         mapa1.carregaMapa(modeloMapa1);
         this.configuraMapa(mapa1);
@@ -58,82 +78,44 @@ export default class CenaFase1 extends Cena {
         this.pc = pc;
         this.adicionar(pc);
 
-        function perseguePC(dt) {
-            this.vx = 15 * Math.sign(pc.x - this.x);
-            this.vy = 15 * Math.sign(pc.y - this.y);
+        this.criarInimigoAleatorio();
+        this.criarInimigoAleatorio();
+        this.criarInimigoAleatorio();
+        for (let i = 0; i < this.moedasTotais; i++) {
+            this.criaMoedaAleatoria();
         }
-        // const en1 = new Sprite({ x: 140, y: 100, color: "red", perseguePC });
-        // const en2 = new Sprite({ x: 115, y: 40, color: "red", perseguePC });
-        // const en3 = new Sprite({ x: 115, y: 160, color: "red", perseguePC });
-        const en1 = new Sprite({
-            x: 145,
-            y: 110,
-            color: "red",
-            controlar: perseguePC,
-            tags: ["enemy"],
-        });
-        const en2 = new Sprite({
-            x: 115,
-            y: 45,
-            color: "red",
-            controlar: perseguePC,
-            tags: ["enemy"],
-        });
-        const en3 = new Sprite({
-            x: 145,
-            y: 160,
-            color: "red",
-            controlar: perseguePC,
-            tags: ["enemy"],
-        });
-        this.adicionar(en1);
-        this.adicionar(en2);
-        this.adicionar(en3);
-
-        // this.criaSpriteAleatorio();
-        // this.criaSpriteAleatorio();
-        // this.criaSpriteAleatorio();
-        // this.criaSpriteAleatorio();
-        // criaSpriteAleatorio();
     }
 
-    criaSpriteAleatorio() {
-        let mx = 0;
-        let my = 0;
-        let l = 0;
-        let c = 0;
+    criaMoedaAleatoria() {
         try {
-            while (this.mapa.tiles[l][c] !== 0) {
-                c = Math.floor(Math.random() * this.mapa.COLUNAS);
-                l = Math.floor(Math.random() * this.mapa.LINHAS);
-            }
-            mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
-            my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
-            let behavior = Math.floor(Math.random() * 4);
-            let vx = 0;
-            let vy = 0;
-            switch (behavior) {
-                case 0:
-                    vx = 10;
-                    break;
-                case 1:
-                    vx = -10;
-                    break;
-                case 2:
-                    vy = 10;
-                    break;
-                case 3:
-                    vy = -10;
-                    break;
-                default:
-                    break;
-            }
+            let posicao = { ...this.obterPosicaoVazia() };
+            const sprite = new Sprite({
+                x: posicao.mx,
+                y: posicao.my,
+                tags: ["coin"],
+                image: "coin",
+            });
+            this.adicionar(sprite);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    criarInimigoAleatorio() {
+        try {
+            let posicao = { ...this.obterPosicaoVazia() };
             let pc = this.pc;
             function perseguePC(dt) {
                 this.vx = 15 * Math.sign(pc.x - this.x);
                 this.vy = 15 * Math.sign(pc.y - this.y);
             }
-            const sprite = new Sprite({ x: mx, y: my, color: "red", vx, vy, controlar: perseguePC });
+            const sprite = new Sprite({
+                x: posicao.mx,
+                y: posicao.my,
+                color: "red",
+                controlar: perseguePC,
+                tags: ["enemy"],
+            });
             this.adicionar(sprite);
         } catch (error) {
             console.log("c: " + c);
@@ -141,5 +123,19 @@ export default class CenaFase1 extends Cena {
             console.log(this.mapa.tiles);
             console.log(error);
         }
+    }
+
+    obterPosicaoVazia() {
+        let mx = 0;
+        let my = 0;
+        let l = 0;
+        let c = 0;
+        while (this.mapa.tiles[l][c] !== 0) {
+            c = Math.floor(Math.random() * this.mapa.COLUNAS);
+            l = Math.floor(Math.random() * this.mapa.LINHAS);
+        }
+        mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
+        my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
+        return { mx, my };
     }
 }

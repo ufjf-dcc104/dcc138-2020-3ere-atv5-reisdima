@@ -11,7 +11,8 @@ export default class Sprite {
         vx = 0,
         vy = 0,
         controlar = () => {},
-        tags = []
+        tags = [],
+        image = null,
     } = {}) {
         this.vx = vx;
         this.vy = vy;
@@ -21,37 +22,46 @@ export default class Sprite {
         this.height = h;
         this.color = color;
         this.cena = null;
+        this.image = image;
         this.mx = 0;
         this.my = 0;
         this.controlar = controlar;
         this.tags = new Set();
-        tags.forEach(tag => {
+        tags.forEach((tag) => {
             this.tags.add(tag);
-        })
+        });
     }
 
     desenhar(ctx) {
         ctx.fillStyle = this.color;
-        ctx.fillRect(
-            this.x - this.width / 2,
-            this.y - this.height / 2,
-            this.width,
-            this.height
-        );
-        ctx.strokeStyle = "blue";
-        ctx.strokeRect(
-            this.mx * this.cena.mapa.SIZE,
-            this.my * this.cena.mapa.SIZE,
-            this.cena.mapa.SIZE,
-            this.cena.mapa.SIZE
-        );
+        if (this.image) {
+            ctx.drawImage(
+                this.cena.assets.img(this.image),
+                this.x - this.width / 2,
+                this.y - this.height / 2,
+                this.width,
+                this.height
+            );
+        } else {
+            ctx.fillRect(
+                this.x - this.width / 2,
+                this.y - this.height / 2,
+                this.width,
+                this.height
+            );
+            ctx.strokeStyle = "blue";
+            ctx.strokeRect(
+                this.mx * this.cena.mapa.SIZE,
+                this.my * this.cena.mapa.SIZE,
+                this.cena.mapa.SIZE,
+                this.cena.mapa.SIZE
+            );
+        }
     }
 
-    controlar(dt){
+    controlar(dt) {}
 
-    }
-
-    mover(dt){
+    mover(dt) {
         this.x = this.x + this.vx * dt;
         this.y = this.y + this.vy * dt;
         this.mx = Math.floor(this.x / this.cena.mapa.SIZE);

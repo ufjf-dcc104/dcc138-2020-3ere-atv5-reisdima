@@ -15,6 +15,7 @@ assets.carregaImagem("garota", "assets/garota.png");
 assets.carregaImagem("esqueleto", "assets/skelly.png");
 assets.carregaImagem("orc", "assets/orc.png");
 assets.carregaImagem("grass", "assets/grass.png");
+assets.carregaImagem("coin", "assets/coin.png");
 assets.carregaImagem("water", "assets/water.png");
 assets.carregaAudio("coin", "assets/coin.wav");
 assets.carregaAudio("boom", "assets/boom.wav");
