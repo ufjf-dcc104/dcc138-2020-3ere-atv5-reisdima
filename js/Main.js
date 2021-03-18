@@ -1,13 +1,11 @@
 import AssetManager from "./AssetsManager.js";
-import Cena from "./Cena.js";
-import Mapa from "./Mapa.js";
 import Mixer from "./Mixer.js";
 import Sprite from "./Sprite.js";
 import InputManager from "./InputManager.js";
-import { mapa1 as modeloMapa1 } from "../maps/mapa1.js";
 import Game from "./Game.js";
 import CenaJogo from "./CenaJogo.js";
 import CenaCarregando from "./CenaCarregando.js";
+import CenaFim from "./CenaFim.js";
 
 const input = new InputManager();
 const mixer = new Mixer(10);
@@ -41,51 +39,12 @@ const game = new Game(canvas, assets, input);
 
 const cena0 = new CenaCarregando(canvas, assets);
 const cena1 = new CenaJogo(canvas, assets);
+const cena2 = new CenaFim(canvas, assets);
 game.adicionarCena("carregando", cena0);
 game.adicionarCena("jogo", cena1);
+game.adicionarCena("fim", cena2);
 
-const mapa1 = new Mapa(10, 14, 32);
-mapa1.carregaMapa(modeloMapa1);
-cena1.configuraMapa(mapa1);
 
-const pc = new Sprite({ vx: 0, x: 50, y: 90 });
-pc.controlar = function (dt) {
-    if (input.comandos.get("MOVE_ESQUERDA")) {
-        this.vx = -50;
-    } else if (input.comandos.get("MOVE_DIREITA")) {
-        this.vx = 50;
-    } else {
-        this.vx = 0;
-    }
-    if (input.comandos.get("MOVE_CIMA")) {
-        this.vy = -50;
-    } else if (input.comandos.get("MOVE_BAIXO")) {
-        this.vy = 50;
-    } else {
-        this.vy = 0;
-    }
-};
-cena1.adicionar(pc);
-
-function perseguePC(dt){
-    this.vx = 15 * Math.sign(pc.x - this.x);
-    this.vy = 15 * Math.sign(pc.y - this.y);
-}
-// const en1 = new Sprite({ x: 140, y: 100, color: "red", perseguePC });
-// const en2 = new Sprite({ x: 115, y: 40, color: "red", perseguePC });
-// const en3 = new Sprite({ x: 115, y: 160, color: "red", perseguePC });
-const en1 = new Sprite({ x: 145, y: 110, color: "red", controlar: perseguePC });
-const en2 = new Sprite({ x: 115, y: 45, color: "red", controlar: perseguePC });
-const en3 = new Sprite({ x: 145, y: 160, color: "red", controlar: perseguePC });
-cena1.adicionar(en1);
-cena1.adicionar(en2);
-cena1.adicionar(en3);
-
-// cena1.criaSpriteAleatorio();
-// cena1.criaSpriteAleatorio();
-// cena1.criaSpriteAleatorio();
-// cena1.criaSpriteAleatorio();
-// criaSpriteAleatorio();
 
 // cena1.iniciar();
 game.iniciar();
