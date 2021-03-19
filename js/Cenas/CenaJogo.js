@@ -28,23 +28,13 @@ export default class CenaJogo extends Cena {
             this.assets.play("boom");
             return;
         }
-        if (a.tags.has("pc") && b.tags.has("coin")) {
-            if (!this.aRemover.includes(b)) {
-                this.aRemover.push(b);
-            }
-            this.moedasColetadas += 1;
-            if(this.moedasColetadas === this.moedasTotais){
-                this.game.selecionaCena("fase2");
-            }
-            this.assets.play("coin");
-        }
     }
 
     quadro(t) {
         super.quadro(t);
         this.spawnTimer += this.dt;
         if (this.spawnTimer >= this.spawnWaitTime) {
-            this.criarInimigoAleatorio();
+            // this.criarInimigoAleatorio();
             this.spawnTimer = 0;
         }
     }
@@ -56,7 +46,8 @@ export default class CenaJogo extends Cena {
         this.spawnTimer = 0;
         this.spawnWaitTime = 4;
         this.moedasTotais = 4;
-        this.moedasColetadas = 0;
+        this.moedasColetadas = this.moedasColetadas ? this.moedasColetadas : 0;
+        this.moedasColetadasFase = 0;
 
         let animacaoJogador = new Animacao({
             imagem: this.assets.animacao("player"),
@@ -96,9 +87,9 @@ export default class CenaJogo extends Cena {
         for (let i = 0; i < this.moedasTotais; i++) {
             this.criaMoedaAleatoria();
         }
-        for (let i = 0; i < this.inimigosInicias; i++) {
-            this.criarInimigoAleatorio();
-        }
+        // for (let i = 0; i < this.inimigosInicias; i++) {
+        //     this.criarInimigoAleatorio();
+        // }
     }
 
     criaMoedaAleatoria() {
