@@ -1,0 +1,26 @@
+const POSES = [
+    { qmax: 7, pv: 9 },
+    { qmax: 7, pv: 9 },
+    { qmax: 7, pv: 9 },
+    { qmax: 7, pv: 9 },
+    { qmax: 8, pv: 9 },
+    { qmax: 8, pv: 9 },
+    { qmax: 8, pv: 9 },
+    { qmax: 8, pv: 9 },
+    { qmax: 9, pv: 9 },
+    { qmax: 9, pv: 9 },
+    { qmax: 9, pv: 9 },
+    { qmax: 9, pv: 9 },
+    { qmax: 6, pv: 9 },
+    { qmax: 6, pv: 9 },
+    { qmax: 6, pv: 9 },
+    { qmax: 6, pv: 9 },
+    { qmax: 13, pv: 9 },
+    { qmax: 13, pv: 9 },
+    { qmax: 13, pv: 9 },
+    { qmax: 13, pv: 9 },
+    { qmax: 13, pv: 9 },
+    { qmax: 6, pv: 9 },
+];
+
+export { POSES };

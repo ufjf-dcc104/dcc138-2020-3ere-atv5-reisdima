@@ -4,6 +4,7 @@ export default class AssetManager {
         this.carregadas = 0;
         this.imagens = new Map();
         this.audios = new Map();
+        this.animacoes = new Map();
         this.mixer = mixer;
     }
 
@@ -15,6 +16,17 @@ export default class AssetManager {
         })
         img1.src = source;
         this.imagens.set(chave, img1);
+        this.aCarregar++;
+    }
+
+    carregaAnimacao(chave, source) {
+        const animacao = new Image();
+        animacao.addEventListener("load", () => {
+            console.log(`Imagem ${this.carregadas}/${this.aCarregar} carregada`)
+            this.carregadas++;
+        })
+        animacao.src = source;
+        this.animacoes.set(chave, animacao);
         this.aCarregar++;
     }
 
@@ -35,6 +47,10 @@ export default class AssetManager {
 
     audio(chave){
         return this.audios.get(chave);
+    }
+    
+    animacao(chave){
+        return this.animacoes.get(chave);
     }
 
     progresso() {

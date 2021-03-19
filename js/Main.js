@@ -11,14 +11,14 @@ const input = new InputManager();
 const mixer = new Mixer(10);
 const assets = new AssetManager(mixer);
 
-assets.carregaImagem("garota", "assets/garota.png");
 assets.carregaImagem("esqueleto", "assets/skelly.png");
-assets.carregaImagem("orc", "assets/orc.png");
 assets.carregaImagem("grass", "assets/grass.png");
 assets.carregaImagem("coin", "assets/coin.png");
 assets.carregaImagem("water", "assets/water.png");
 assets.carregaAudio("coin", "assets/coin.wav");
 assets.carregaAudio("boom", "assets/boom.wav");
+assets.carregaAnimacao("player", "assets/player.png");
+assets.carregaAnimacao("orc", "assets/orc.png");
 
 // document.body.appendChild(assets.img("garota"));
 // document.body.appendChild(assets.img("esqueleto"));
@@ -68,50 +68,3 @@ document.addEventListener("keydown", (e) => {
             break;
     }
 });
-
-
-
-function criaSpriteAleatorio() {
-    let mx = 0;
-    let my = 0;
-    let l = 0;
-    let c = 0;
-    try {
-        while (cena1.mapa.tiles[l][c] !== 0) {
-            c = Math.floor(Math.random() * cena1.mapa.COLUNAS);
-            l = Math.floor(Math.random() * cena1.mapa.LINHAS);
-        }
-        mx = c * cena1.mapa.SIZE + cena1.mapa.SIZE / 2;
-        my = l * cena1.mapa.SIZE + cena1.mapa.SIZE / 2;
-        let behavior = Math.floor(Math.random() * 4);
-        let vx = 0;
-        let vy = 0;
-        switch (behavior) {
-            case 0:
-                vx = 10;
-                break;
-            case 1:
-                vx = -10;
-                break;
-            case 2:
-                vy = 10;
-                break;
-            case 3:
-                vy = -10;
-                break;
-            default:
-                break;
-        }
-        function perseguePC(dt){
-            this.vx = 15 * Math.sign(pc.x - this.x);
-            this.vy = 15 * Math.sign(pc.y - this.y);
-        }
-        const sprite = new Sprite({ x: mx, y: my, color: "red", vx, vy, perseguePC });
-        cena1.adicionar(sprite);
-    } catch (error) {
-        console.log("c: " + c);
-        console.log("l: " + l);
-        console.log(this.mapa.tiles);
-        console.log(error);
-    }
-}

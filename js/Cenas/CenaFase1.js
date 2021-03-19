@@ -2,6 +2,10 @@ import Cena from "./Cena.js";
 import Sprite from "../Sprite.js";
 import Mapa from "../Mapa.js";
 import { mapa1 as modeloMapa1 } from "../../maps/mapa1.js";
+import { mapa2 as modeloMapa2 } from "../../maps/mapa2.js";
+import { POSES as playerAnimation } from "../../animacoes/player.js";
+import { POSES as orcAnimation } from "../../animacoes/orc.js";
+import Animacao from "../Animacao.js";
 
 export default class CenaFase1 extends Cena {
     quandoColidir(a, b) {
@@ -40,7 +44,7 @@ export default class CenaFase1 extends Cena {
         super.quadro(t);
         this.spawnTimer += this.dt;
         if (this.spawnTimer >= this.spawnWaitTime) {
-            this.criarInimigoAleatorio();
+            // this.criarInimigoAleatorio();
             this.spawnTimer = 0;
         }
     }
@@ -53,10 +57,23 @@ export default class CenaFase1 extends Cena {
         this.moedasTotais = 4;
         this.moedasColetadas = 0;
         const mapa1 = new Mapa(10, 14, 32);
-        mapa1.carregaMapa(modeloMapa1);
+        mapa1.carregaMapa(modeloMapa2);
         this.configuraMapa(mapa1);
 
-        const pc = new Sprite({ vx: 0, x: 50, y: 90 });
+        let animacaoJogador = new Animacao({
+            imagem: this.assets.animacao("player"),
+            poses: playerAnimation,
+            width: 32,
+            height: 32,
+        });
+        const pc = new Sprite({
+            vx: 0,
+            x: 70,
+            y: 110,
+            animacao: animacaoJogador,
+            w: 20,
+            h: 20,
+        });
         pc.tags.add("pc");
         const cena = this;
         pc.controlar = function (dt) {
@@ -74,16 +91,17 @@ export default class CenaFase1 extends Cena {
             } else {
                 this.vy = 0;
             }
+            this.animacao.controlar(dt);
         };
         this.pc = pc;
         this.adicionar(pc);
 
         this.criarInimigoAleatorio();
-        this.criarInimigoAleatorio();
-        this.criarInimigoAleatorio();
-        for (let i = 0; i < this.moedasTotais; i++) {
-            this.criaMoedaAleatoria();
-        }
+        // this.criarInimigoAleatorio();
+        // this.criarInimigoAleatorio();
+        // for (let i = 0; i < this.moedasTotais; i++) {
+        //     this.criaMoedaAleatoria();
+        // }
     }
 
     criaMoedaAleatoria() {
@@ -106,15 +124,23 @@ export default class CenaFase1 extends Cena {
             let posicao = { ...this.obterPosicaoVazia() };
             let pc = this.pc;
             function perseguePC(dt) {
-                this.vx = 15 * Math.sign(pc.x - this.x);
-                this.vy = 15 * Math.sign(pc.y - this.y);
+                this.vx = 25 * Math.sign(pc.x - this.x);
+                this.vy = 25 * Math.sign(pc.y - this.y);
+                this.animacao.controlar(dt);
             }
+            const animacaoOrc = new Animacao({
+                imagem: this.assets.animacao("orc"),
+                poses: orcAnimation,
+                width: 32,
+                height: 32,
+            });
             const sprite = new Sprite({
                 x: posicao.mx,
                 y: posicao.my,
                 color: "red",
                 controlar: perseguePC,
                 tags: ["enemy"],
+                animacao: animacaoOrc,
             });
             this.adicionar(sprite);
         } catch (error) {

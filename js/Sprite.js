@@ -12,7 +12,8 @@ export default class Sprite {
         vy = 0,
         controlar = () => {},
         tags = [],
-        image = null,
+        imagem = null,
+        animacao = null,
     } = {}) {
         this.vx = vx;
         this.vy = vy;
@@ -22,10 +23,14 @@ export default class Sprite {
         this.height = h;
         this.color = color;
         this.cena = null;
-        this.image = image;
+        this.imagem = imagem;
         this.mx = 0;
         this.my = 0;
         this.controlar = controlar;
+        this.animacao = animacao;
+        if (animacao) {
+            this.animacao.sprite = this;
+        }
         this.tags = new Set();
         tags.forEach((tag) => {
             this.tags.add(tag);
@@ -34,9 +39,13 @@ export default class Sprite {
 
     desenhar(ctx) {
         ctx.fillStyle = this.color;
-        if (this.image) {
+        if (this.animacao) {
+            // console.log("teste")
+            // this.animacao.desenhar(ctx, this.x - this.width / 2, this.y - this.height / 2);
+            this.animacao.desenhar(ctx, this.x, this.y);
+        } else if (this.imagem) {
             ctx.drawImage(
-                this.cena.assets.img(this.image),
+                this.cena.assets.img(this.imagem),
                 this.x - this.width / 2,
                 this.y - this.height / 2,
                 this.width,
