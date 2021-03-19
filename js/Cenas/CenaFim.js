@@ -11,7 +11,8 @@ export default class CenaFim extends Cena{
         this.ctx.fillText("GAME OVER", this.canvas.width/2, this.canvas.height/2);
         if (this.assets.acabou()) {
             this.ctx.fillStyle = "yellow";
-            this.ctx.fillText("Aperte espaço para jogar novamente", this.canvas.width/2, this.canvas.height/2 + 40);
+            this.ctx.fillText("Você coletou " + this.game.moedasColetadas + " moedas", this.canvas.width/2, this.canvas.height/2 + 40);
+            this.ctx.fillText("Aperte espaço para jogar novamente", this.canvas.width/2, this.canvas.height/2 + 80);
         }
     }
 
@@ -20,6 +21,7 @@ export default class CenaFim extends Cena{
         this.dt = (t - this.t0) / 1000;
         if (this.assets.acabou()) {
             if(this.input.comandos.get("PROXIMA_CENA")){
+                this.game.moedasColetadas = 0;
                 this.game.selecionaCena("fase1");
                 return;
             }

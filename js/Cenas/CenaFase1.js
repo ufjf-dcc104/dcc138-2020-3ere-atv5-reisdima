@@ -10,7 +10,7 @@ export default class CenaFase1 extends CenaJogo {
             if (!this.aRemover.includes(b)) {
                 this.aRemover.push(b);
             }
-            this.moedasColetadas += 1;
+            this.game.moedasColetadas += 1;
             this.moedasColetadasFase += 1;
             if(this.moedasColetadasFase === this.moedasTotais){
                 this.game.selecionaCena("fase2");

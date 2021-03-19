@@ -3,9 +3,10 @@ export default class Cena {
         É responsável por desenhar elementos na tela
         em uma animação.
      */
-    constructor(canvas = null, assets = null) {
+    constructor(canvas = null, assets = null, moedasColetadas = 0) {
         this.canvas = canvas;
         this.game = null;
+        this.moedasColetadas = moedasColetadas;
         this.ctx = canvas?.getContext("2d");
         this.assets = assets;
         this.preparar();

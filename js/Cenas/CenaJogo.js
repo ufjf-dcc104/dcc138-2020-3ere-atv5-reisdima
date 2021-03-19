@@ -34,7 +34,7 @@ export default class CenaJogo extends Cena {
         super.quadro(t);
         this.spawnTimer += this.dt;
         if (this.spawnTimer >= this.spawnWaitTime) {
-            // this.criarInimigoAleatorio();
+            this.criarInimigoAleatorio();
             this.spawnTimer = 0;
         }
     }
@@ -42,11 +42,10 @@ export default class CenaJogo extends Cena {
     preparar() {
         super.preparar();
         this.pc = null;
-        this.inimigosInicias = this.inimigosInicias ? this.inimigosInicias+1 : 3;
+        this.inimigosInicias = 3;
         this.spawnTimer = 0;
         this.spawnWaitTime = 4;
         this.moedasTotais = 4;
-        this.moedasColetadas = this.moedasColetadas ? this.moedasColetadas : 0;
         this.moedasColetadasFase = 0;
 
         let animacaoJogador = new Animacao({
@@ -87,9 +86,9 @@ export default class CenaJogo extends Cena {
         for (let i = 0; i < this.moedasTotais; i++) {
             this.criaMoedaAleatoria();
         }
-        // for (let i = 0; i < this.inimigosInicias; i++) {
-        //     this.criarInimigoAleatorio();
-        // }
+        for (let i = 0; i < this.inimigosInicias; i++) {
+            this.criarInimigoAleatorio();
+        }
     }
 
     criaMoedaAleatoria() {

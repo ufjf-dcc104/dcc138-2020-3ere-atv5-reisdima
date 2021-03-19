@@ -1,5 +1,6 @@
 export default class Game {
     constructor(canvas, assets, input) {
+        this.moedasColetadas = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext("2d");
         this.assets = assets;
