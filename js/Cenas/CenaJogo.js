@@ -99,7 +99,7 @@ export default class CenaJogo extends Cena {
                 x: posicao.mx,
                 y: posicao.my,
                 tags: ["coin"],
-                image: "ps",
+                imagem: "coin",
             });
             this.adicionar(sprite);
         } catch (error) {

@@ -40,8 +40,6 @@ export default class Sprite {
     desenhar(ctx) {
         ctx.fillStyle = this.color;
         if (this.animacao) {
-            // console.log("teste")
-            // this.animacao.desenhar(ctx, this.x - this.width / 2, this.y - this.height / 2);
             this.animacao.desenhar(ctx, this.x, this.y);
         } else if (this.imagem) {
             ctx.drawImage(
