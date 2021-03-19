@@ -107,7 +107,6 @@ export default class Cena {
         this.t0 = null;
         this.dt = 0;
         this.idAnim = null;
-        this.mapa = null;
         this.rodando = true;
     }
 
