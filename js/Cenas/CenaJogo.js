@@ -51,8 +51,8 @@ export default class CenaJogo extends Cena {
         let animacaoJogador = new Animacao({
             imagem: this.assets.animacao("player"),
             poses: playerAnimation,
-            width: 32,
-            height: 32,
+            width: 64,
+            height: 64,
         });
         const pc = new Sprite({
             vx: 0,
@@ -111,15 +111,19 @@ export default class CenaJogo extends Cena {
             let posicao = { ...this.obterPosicaoVazia() };
             let pc = this.pc;
             function perseguePC(dt) {
-                this.vx = 25 * Math.sign(pc.x - this.x);
-                this.vy = 25 * Math.sign(pc.y - this.y);
+                if(Math.abs(pc.x - this.x) > this.width/2){
+                    this.vx = 25 * Math.sign(pc.x - this.x);
+                }
+                if(Math.abs(pc.y - this.y) > this.height/2){
+                    this.vy = 25 * Math.sign(pc.y - this.y);
+                }
                 this.animacao.controlar(dt);
             }
             const animacaoOrc = new Animacao({
                 imagem: this.assets.animacao("orc"),
                 poses: orcAnimation,
-                width: 32,
-                height: 32,
+                width: 64,
+                height: 64,
             });
             const sprite = new Sprite({
                 x: posicao.mx,

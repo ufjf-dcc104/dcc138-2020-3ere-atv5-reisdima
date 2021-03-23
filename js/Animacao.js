@@ -32,6 +32,13 @@ export default class Animacao {
             this.width,
             this.height
         );
+        ctx.strokeStyle = "blue";
+        ctx.strokeRect(
+            x - this.sprite.width / 2,
+            y - this.sprite.height / 2,
+            this.sprite.width,
+            this.sprite.height
+        );
     }
 
     controlar(dt) {
@@ -42,17 +49,17 @@ export default class Animacao {
         if (this.sprite.vx > 0) {
             this.poseAtual = 11;
         } 
-        if (this.sprite.vx < 0) {
+        else if (this.sprite.vx < 0) {
             this.poseAtual = 9;
         } 
-        if (this.sprite.vy > 0) {
+        else if (this.sprite.vy > 0) {
             this.poseAtual = 10;
         } 
-        if (this.sprite.vy < 0) {
+        else if (this.sprite.vy < 0) {
             this.poseAtual = 8;
         }
-        // else {
-        //     this.quadroAtual = 0;
-        // }
+        else {
+            this.quadroAtual = 0;
+        }
     }
 }
