@@ -16,6 +16,8 @@ assets.carregaImagem("esqueleto", "assets/skelly.png");
 assets.carregaImagem("grass", "assets/grass.png");
 assets.carregaImagem("coin", "assets/coin.png");
 assets.carregaImagem("water", "assets/water.png");
+assets.carregaImagem("rock", "assets/rock.png");
+assets.carregaImagem("bomb", "assets/bomb.png");
 assets.carregaAudio("coin", "assets/coin.wav");
 assets.carregaAudio("boom", "assets/boom.wav");
 assets.carregaAnimacao("player", "assets/player.png");
@@ -30,7 +32,8 @@ input.configurarTeclado({
     ArrowRight: "MOVE_DIREITA",
     ArrowUp: "MOVE_CIMA",
     ArrowDown: "MOVE_BAIXO",
-    " ": "PROXIMA_CENA"
+    " ": "PROXIMA_CENA",
+    "e": "BOMBA"
 });
 
 const game = new Game(canvas, assets, input);

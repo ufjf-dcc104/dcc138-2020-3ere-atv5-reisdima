@@ -28,6 +28,16 @@ export default class CenaJogo extends Cena {
             this.assets.play("boom");
             return;
         }
+        if (a.tags.has("bomba") && b.tags.has("enemy")) {
+            if (!this.aRemover.includes(b)) {
+                this.aRemover.push(b);
+            }
+            this.assets.play("boom");
+            a.x = 1000;
+            a.vx = 0;
+            a.vy = 0;
+            return;
+        }
     }
 
     quadro(t) {
@@ -54,6 +64,8 @@ export default class CenaJogo extends Cena {
             width: 64,
             height: 64,
         });
+        // const arrow = this.obterSpriteArrow();
+        const bomba = this.obterSpriteBomba();
         const pc = new Sprite({
             vx: 0,
             x: 70,
@@ -62,6 +74,9 @@ export default class CenaJogo extends Cena {
             w: 20,
             h: 20,
         });
+        pc.bomba = bomba;
+        pc.cooldown = 3;
+        pc.timer = 3;
         pc.tags.add("pc");
         const cena = this;
         pc.controlar = function (dt) {
@@ -79,6 +94,14 @@ export default class CenaJogo extends Cena {
             } else {
                 this.vy = 0;
             }
+            if(cena.input.comandos.get("BOMBA")){
+                if(this.timer >= this.cooldown){
+                    this.timer = 0;
+                    this.bomba.x = this.x;
+                    this.bomba.y = this.y;
+                }
+            }
+            this.timer += dt;
             this.animacao.controlar(dt);
         };
         this.pc = pc;
@@ -144,22 +167,49 @@ export default class CenaJogo extends Cena {
         let my = 0;
         let l = 0;
         let c = 0;
-        console.log("A: " + this.mapa.tiles[l][c])
         while (this.mapa.tiles[l][c] !== 0 || this.obterDistanciaVetores({x: this.pc.x, y: this.pc.y}, {x: mx, y: my}) < this.mapa.SIZE * 4) {
-            console.log("A: " + this.mapa.tiles[l][c])
             c = Math.floor(Math.random() * this.mapa.COLUNAS);
             l = Math.floor(Math.random() * this.mapa.LINHAS);
             mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
             my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
         }
-        console.log({mx, my})
         return { mx, my };
     }
 
     obterDistanciaVetores(vetor1, vetor2){
-        console.log(vetor1, vetor2);
         let d = Math.sqrt(Math.pow(vetor2.x - vetor1.x, 2) + Math.pow(vetor2.y - vetor1.y, 2));
-        console.log(d)
         return d;
     }
+
+    obterSpriteArrow() {
+        const arrow = new Sprite({
+            x: 1000,
+            imagem: "arrow",
+            w: 24,
+            h: 24,
+        });
+        arrow.ignoreCollision
+        arrow.tags.add("arrow");
+        this.adicionar(arrow);
+        const cena = this;
+        // arrow.controlar = function (dt) {
+        // };
+        return arrow;
+    }
+    obterSpriteBomba() {
+        const bomba = new Sprite({
+            x: 1000,
+            imagem: "bomb",
+            w: 24,
+            h: 24,
+        });
+        bomba.ignoreCollision
+        bomba.tags.add("bomba");
+        this.adicionar(bomba);
+        const cena = this;
+        // bomba.controlar = function (dt) {
+        // };
+        return bomba;
+    }
+
 }
