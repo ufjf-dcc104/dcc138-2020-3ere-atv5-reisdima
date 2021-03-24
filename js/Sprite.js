@@ -90,17 +90,17 @@ export default class Sprite {
     }
 
     aplicaRestricoes(dt) {
-        this.aplicaRestricoesDireita(this.mx + 1, this.my - 1);
         this.aplicaRestricoesDireita(this.mx + 1, this.my);
+        this.aplicaRestricoesEsquerda(this.mx - 1, this.my);
+        this.aplicaRestricoesCima(this.mx, this.my - 1);
+        this.aplicaRestricoesBaixo(this.mx, this.my + 1);
+        this.aplicaRestricoesDireita(this.mx + 1, this.my - 1);
         this.aplicaRestricoesDireita(this.mx + 1, this.my + 1);
         this.aplicaRestricoesEsquerda(this.mx - 1, this.my - 1);
-        this.aplicaRestricoesEsquerda(this.mx - 1, this.my);
         this.aplicaRestricoesEsquerda(this.mx - 1, this.my + 1);
         this.aplicaRestricoesCima(this.mx - 1, this.my - 1);
-        this.aplicaRestricoesCima(this.mx, this.my - 1);
         this.aplicaRestricoesCima(this.mx + 1, this.my - 1);
         this.aplicaRestricoesBaixo(this.mx - 1, this.my + 1);
-        this.aplicaRestricoesBaixo(this.mx, this.my + 1);
         this.aplicaRestricoesBaixo(this.mx + 1, this.my + 1);
     }
 
