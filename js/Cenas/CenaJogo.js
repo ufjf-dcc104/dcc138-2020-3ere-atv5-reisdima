@@ -144,12 +144,22 @@ export default class CenaJogo extends Cena {
         let my = 0;
         let l = 0;
         let c = 0;
-        while (this.mapa.tiles[l][c] !== 0) {
+        console.log("A: " + this.mapa.tiles[l][c])
+        while (this.mapa.tiles[l][c] !== 0 || this.obterDistanciaVetores({x: this.pc.x, y: this.pc.y}, {x: mx, y: my}) < this.mapa.SIZE * 4) {
+            console.log("A: " + this.mapa.tiles[l][c])
             c = Math.floor(Math.random() * this.mapa.COLUNAS);
             l = Math.floor(Math.random() * this.mapa.LINHAS);
+            mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
+            my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
         }
-        mx = c * this.mapa.SIZE + this.mapa.SIZE / 2;
-        my = l * this.mapa.SIZE + this.mapa.SIZE / 2;
+        console.log({mx, my})
         return { mx, my };
+    }
+
+    obterDistanciaVetores(vetor1, vetor2){
+        console.log(vetor1, vetor2);
+        let d = Math.sqrt(Math.pow(vetor2.x - vetor1.x, 2) + Math.pow(vetor2.y - vetor1.y, 2));
+        console.log(d)
+        return d;
     }
 }
