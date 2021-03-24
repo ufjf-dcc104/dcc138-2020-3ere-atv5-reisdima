@@ -17,6 +17,8 @@ assets.carregaImagem("grass", "assets/grass.png");
 assets.carregaImagem("coin", "assets/coin.png");
 assets.carregaImagem("water", "assets/water.png");
 assets.carregaImagem("rock", "assets/rock.png");
+assets.carregaImagem("rock2", "assets/rock2.png");
+assets.carregaImagem("dirt", "assets/dirt.png");
 assets.carregaImagem("bomb", "assets/bomb.png");
 assets.carregaAudio("coin", "assets/coin.wav");
 assets.carregaAudio("boom", "assets/boom.wav");

@@ -16,18 +16,17 @@ export default class Mapa {
     desenhar(ctx) {
         for (let l = 0; l < this.LINHAS; l++) {
             for (let c = 0; c < this.COLUNAS; c++) {
+                ctx.drawImage(
+                    this.cena.assets.img("grass"),
+                    c * this.SIZE,
+                    l * this.SIZE,
+                    this.SIZE,
+                    this.SIZE
+                );
                 switch (this.tiles[l][c]) {
                     case 1:
-                        ctx.fillStyle = "grey";
-                        ctx.lineWidth = 1;
-                        ctx.strokeStyle = "black";
-                        ctx.fillRect(
-                            c * this.SIZE,
-                            l * this.SIZE,
-                            this.SIZE,
-                            this.SIZE
-                        );
-                        ctx.strokeRect(
+                        ctx.drawImage(
+                            this.cena.assets.img("rock"),
                             c * this.SIZE,
                             l * this.SIZE,
                             this.SIZE,
@@ -35,42 +34,15 @@ export default class Mapa {
                         );
                         break;
                     case 2:
-                        ctx.fillStyle = "red";
-                        ctx.lineWidth = 1;
-                        ctx.strokeStyle = "white";
-                        ctx.fillRect(
-                            c * this.SIZE,
-                            l * this.SIZE,
-                            this.SIZE,
-                            this.SIZE
-                        );
-                        ctx.strokeRect(
-                            c * this.SIZE,
-                            l * this.SIZE,
-                            this.SIZE,
-                            this.SIZE
-                        );
-                        break;
-                    case 3:
                         ctx.drawImage(
-                            this.cena.assets.img("water"),
+                            this.cena.assets.img("rock2"),
                             c * this.SIZE,
                             l * this.SIZE,
                             this.SIZE,
                             this.SIZE
-                        )
+                        );
                         break;
                     default:
-                        ctx.drawImage(
-                            this.cena.assets.img("grass"),
-                            c * this.SIZE,
-                            l * this.SIZE,
-                            this.SIZE,
-                            this.SIZE
-                        )
-                        // ctx.fillStyle = "black";
-                        // ctx.lineWidth = 1;
-                        // ctx.strokeStyle = "grey";
                         break;
                 }
             }
