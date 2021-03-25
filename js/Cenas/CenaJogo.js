@@ -28,7 +28,7 @@ export default class CenaJogo extends Cena {
             this.assets.play("boom");
             return;
         }
-        if (a.tags.has("bomba") && b.tags.has("enemy")) {
+        if (a.tags.has("enemy") && b.tags.has("bomba")) {
             if (!this.aRemover.includes(a)) {
                 this.aRemover.push(a);
             }
@@ -154,20 +154,20 @@ export default class CenaJogo extends Cena {
         return arrow;
     }
 
-    criaSpriteBomba(x, y) {
-        const bomba = new Sprite({
-            x: x,
-            x: y,
-            imagem: "bomb",
-            w: 24,
-            h: 24,
-        });
-        bomba.tags.add("bomba");
-        this.adicionar(bomba);
-        // bomba.controlar = function (dt) {
-        // };
-        return bomba;
-    }
+    // criaSpriteBomba(x, y) {
+    //     const bomba = new Sprite({
+    //         x: x,
+    //         x: y,
+    //         imagem: "bomb",
+    //         w: 24,
+    //         h: 24,
+    //     });
+    //     bomba.tags.add("bomba");
+    //     this.adicionar(bomba);
+    //     // bomba.controlar = function (dt) {
+    //     // };
+    //     return bomba;
+    // }
     
     obterSpritePlayer(bomba) {
         let animacaoJogador = new Animacao({
@@ -207,16 +207,16 @@ export default class CenaJogo extends Cena {
         }
         pc.controlar = function (dt) {
             if (cena.input.comandos.get("MOVE_ESQUERDA")) {
-                this.vx = -100;
+                this.vx = -50;
             } else if (cena.input.comandos.get("MOVE_DIREITA")) {
-                this.vx = 100;
+                this.vx = 50;
             } else {
                 this.vx = 0;
             }
             if (cena.input.comandos.get("MOVE_CIMA")) {
-                this.vy = -100;
+                this.vy = -50;
             } else if (cena.input.comandos.get("MOVE_BAIXO")) {
-                this.vy = 100;
+                this.vy = 50;
             } else {
                 this.vy = 0;
             }

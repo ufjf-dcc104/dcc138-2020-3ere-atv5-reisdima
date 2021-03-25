@@ -32,13 +32,14 @@ export default class Animacao {
             this.width,
             this.height
         );
-        ctx.strokeStyle = "blue";
-        ctx.strokeRect(
-            x - this.sprite.width / 2,
-            y - this.sprite.height / 2,
-            this.sprite.width,
-            this.sprite.height
-        );
+        // Debug de colisão
+        // ctx.strokeStyle = "blue";
+        // ctx.strokeRect(
+        //     x - this.sprite.width / 2,
+        //     y - this.sprite.height / 2,
+        //     this.sprite.width,
+        //     this.sprite.height
+        // );
     }
 
     controlar(dt) {

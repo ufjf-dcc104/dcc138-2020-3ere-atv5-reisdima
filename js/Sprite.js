@@ -49,13 +49,14 @@ export default class Sprite {
                 this.width,
                 this.height
             );
-            ctx.strokeStyle = "blue";
-            ctx.strokeRect(
-                this.x - this.width / 2,
-                this.y - this.height / 2,
-                this.width,
-                this.height
-            );
+            // Debug de colisão
+            // ctx.strokeStyle = "blue";
+            // ctx.strokeRect(
+            //     this.x - this.width / 2,
+            //     this.y - this.height / 2,
+            //     this.width,
+            //     this.height
+            // );
         } else {
             ctx.fillRect(
                 this.x - this.width / 2,
@@ -121,13 +122,14 @@ export default class Sprite {
                     width: SIZE,
                     height: SIZE,
                 };
-                this.cena.ctx.strokeStyle = "white";
-                this.cena.ctx.strokeRect(
-                    tile.x - SIZE / 2,
-                    tile.y - SIZE / 2,
-                    SIZE,
-                    SIZE
-                );
+                // Debug de colisão
+                // this.cena.ctx.strokeStyle = "white";
+                // this.cena.ctx.strokeRect(
+                //     tile.x - SIZE / 2,
+                //     tile.y - SIZE / 2,
+                //     SIZE,
+                //     SIZE
+                // );
                 if (this.colidiuCom(tile)) {
                     this.vx = 0;
                     this.x = tile.x - tile.width / 2 - this.width / 2 - 1;
@@ -146,13 +148,14 @@ export default class Sprite {
                     width: SIZE,
                     height: SIZE,
                 };
-                this.cena.ctx.strokeStyle = "white";
-                this.cena.ctx.strokeRect(
-                    tile.x - SIZE / 2,
-                    tile.y - SIZE / 2,
-                    SIZE,
-                    SIZE
-                );
+                // Debug de colisão
+                // this.cena.ctx.strokeStyle = "white";
+                // this.cena.ctx.strokeRect(
+                //     tile.x - SIZE / 2,
+                //     tile.y - SIZE / 2,
+                //     SIZE,
+                //     SIZE
+                // );
                 if (this.colidiuCom(tile)) {
                     this.vx = 0;
                     this.x = tile.x + tile.width / 2 + this.width / 2 + 1;
@@ -170,13 +173,14 @@ export default class Sprite {
                     width: SIZE,
                     height: SIZE,
                 };
-                this.cena.ctx.strokeStyle = "white";
-                this.cena.ctx.strokeRect(
-                    tile.x - SIZE / 2,
-                    tile.y - SIZE / 2,
-                    SIZE,
-                    SIZE
-                );
+                // Debug de colisão
+                // this.cena.ctx.strokeStyle = "white";
+                // this.cena.ctx.strokeRect(
+                //     tile.x - SIZE / 2,
+                //     tile.y - SIZE / 2,
+                //     SIZE,
+                //     SIZE
+                // );
                 if (this.colidiuCom(tile)) {
                     this.vy = 0;
                     this.y = tile.y - tile.height / 2 - this.height / 2 - 1;
@@ -195,13 +199,14 @@ export default class Sprite {
                     width: SIZE,
                     height: SIZE,
                 };
-                this.cena.ctx.strokeStyle = "white";
-                this.cena.ctx.strokeRect(
-                    tile.x - SIZE / 2,
-                    tile.y - SIZE / 2,
-                    SIZE,
-                    SIZE
-                );
+                // Debug de colisão
+                // this.cena.ctx.strokeStyle = "white";
+                // this.cena.ctx.strokeRect(
+                //     tile.x - SIZE / 2,
+                //     tile.y - SIZE / 2,
+                //     SIZE,
+                //     SIZE
+                // );
                 if (this.colidiuCom(tile)) {
                     this.vy = 0;
                     this.y = tile.y + tile.height / 2 + this.height / 2 + 1;
