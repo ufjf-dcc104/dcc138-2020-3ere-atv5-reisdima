@@ -66,9 +66,9 @@ export default class CenaJogo extends Cena {
         for (let i = 0; i < this.moedasTotais; i++) {
             this.criaMoedaAleatoria();
         }
-        // for (let i = 0; i < this.inimigosInicias; i++) {
-        //     this.criarInimigoAleatorio();
-        // }
+        for (let i = 0; i < this.inimigosInicias; i++) {
+            this.criarInimigoAleatorio();
+        }
     }
 
     criaMoedaAleatoria() {

@@ -43,7 +43,7 @@ export default class Cena {
         this.dt = (t - this.t0) / 1000;
         this.passo(this.dt);
         this.desenhar();
-        this.sprites.sort((a,b)=>a.y-b.y);
+        // this.sprites.sort((a,b)=>a.y-b.y);
         this.checaColisao();
         this.removerSprites();
         if(this.rodando){
