@@ -29,13 +29,13 @@ export default class CenaJogo extends Cena {
             return;
         }
         if (a.tags.has("bomba") && b.tags.has("enemy")) {
+            if (!this.aRemover.includes(a)) {
+                this.aRemover.push(a);
+            }
             if (!this.aRemover.includes(b)) {
                 this.aRemover.push(b);
             }
             this.assets.play("boom");
-            a.x = 1000;
-            a.vx = 0;
-            a.vy = 0;
             return;
         }
     }
@@ -58,60 +58,17 @@ export default class CenaJogo extends Cena {
         this.moedasTotais = 4;
         this.moedasColetadasFase = 0;
 
-        let animacaoJogador = new Animacao({
-            imagem: this.assets.animacao("player"),
-            poses: playerAnimation,
-            width: 64,
-            height: 64,
-        });
         // const arrow = this.obterSpriteArrow();
-        const bomba = this.obterSpriteBomba();
-        const pc = new Sprite({
-            vx: 0,
-            x: 70,
-            y: 110,
-            animacao: animacaoJogador,
-            w: 20,
-            h: 20,
-        });
-        pc.bomba = bomba;
-        pc.cooldown = 3;
-        pc.timer = 3;
-        pc.tags.add("pc");
-        const cena = this;
-        pc.controlar = function (dt) {
-            if (cena.input.comandos.get("MOVE_ESQUERDA")) {
-                this.vx = -50;
-            } else if (cena.input.comandos.get("MOVE_DIREITA")) {
-                this.vx = 50;
-            } else {
-                this.vx = 0;
-            }
-            if (cena.input.comandos.get("MOVE_CIMA")) {
-                this.vy = -50;
-            } else if (cena.input.comandos.get("MOVE_BAIXO")) {
-                this.vy = 50;
-            } else {
-                this.vy = 0;
-            }
-            if(cena.input.comandos.get("BOMBA")){
-                if(this.timer >= this.cooldown){
-                    this.timer = 0;
-                    this.bomba.x = this.x;
-                    this.bomba.y = this.y;
-                }
-            }
-            this.timer += dt;
-            this.animacao.controlar(dt);
-        };
+        // const bomba = this.obterSpriteBomba();
+        const pc = this.obterSpritePlayer();
         this.pc = pc;
         this.adicionar(pc);
         for (let i = 0; i < this.moedasTotais; i++) {
             this.criaMoedaAleatoria();
         }
-        for (let i = 0; i < this.inimigosInicias; i++) {
-            this.criarInimigoAleatorio();
-        }
+        // for (let i = 0; i < this.inimigosInicias; i++) {
+        //     this.criarInimigoAleatorio();
+        // }
     }
 
     criaMoedaAleatoria() {
@@ -196,20 +153,87 @@ export default class CenaJogo extends Cena {
         // };
         return arrow;
     }
-    obterSpriteBomba() {
+
+    criaSpriteBomba(x, y) {
         const bomba = new Sprite({
-            x: 1000,
+            x: x,
+            x: y,
             imagem: "bomb",
             w: 24,
             h: 24,
         });
-        bomba.ignoreCollision
         bomba.tags.add("bomba");
         this.adicionar(bomba);
-        const cena = this;
         // bomba.controlar = function (dt) {
         // };
         return bomba;
+    }
+    
+    obterSpritePlayer(bomba) {
+        let animacaoJogador = new Animacao({
+            imagem: this.assets.animacao("player"),
+            poses: playerAnimation,
+            width: 64,
+            height: 64,
+        });
+        const pc = new Sprite({
+            vx: 0,
+            x: 70,
+            y: 110,
+            animacao: animacaoJogador,
+            w: 20,
+            h: 20,
+        });
+        pc.bomba = bomba;
+        pc.cooldown = 3;
+        pc.timer = 3;
+        pc.maxBombas = 4;
+        pc.bombasUsadas = 0;
+        pc.tags.add("pc");
+        const cena = this;
+        pc.criaBomba = function criaSpriteBomba() {
+            const bomba = new Sprite({
+                x: this.x,
+                y: this.y,
+                imagem: "bomb",
+                w: 24,
+                h: 24,
+            });
+            bomba.tags.add("bomba");
+            cena.adicionar(bomba);
+            // bomba.controlar = function (dt) {
+            // };
+            return bomba;
+        }
+        pc.controlar = function (dt) {
+            if (cena.input.comandos.get("MOVE_ESQUERDA")) {
+                this.vx = -100;
+            } else if (cena.input.comandos.get("MOVE_DIREITA")) {
+                this.vx = 100;
+            } else {
+                this.vx = 0;
+            }
+            if (cena.input.comandos.get("MOVE_CIMA")) {
+                this.vy = -100;
+            } else if (cena.input.comandos.get("MOVE_BAIXO")) {
+                this.vy = 100;
+            } else {
+                this.vy = 0;
+            }
+            if(cena.input.comandos.get("BOMBA")){
+                if(this.timer >= this.cooldown && this.bombasUsadas < this.maxBombas){
+                    this.timer = 0;
+                    // this.bomba.x = this.x;
+                    // this.bomba.y = this.y;
+                    this.bombasUsadas += 1;
+                    this.criaBomba();
+                    // criaSpriteBomba(this.x, this. y, cena);
+                }
+            }
+            this.timer += dt;
+            this.animacao.controlar(dt);
+        };
+        return pc;
     }
 
 }
