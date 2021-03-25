@@ -49,6 +49,13 @@ export default class Sprite {
                 this.width,
                 this.height
             );
+            ctx.strokeStyle = "blue";
+            ctx.strokeRect(
+                this.x - this.width / 2,
+                this.y - this.height / 2,
+                this.width,
+                this.height
+            );
         } else {
             ctx.fillRect(
                 this.x - this.width / 2,
