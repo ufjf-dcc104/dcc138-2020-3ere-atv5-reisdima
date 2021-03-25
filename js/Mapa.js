@@ -26,7 +26,7 @@ export default class Mapa {
                 switch (this.tiles[l][c]) {
                     case 1:
                         ctx.drawImage(
-                            this.cena.assets.img("rock"),
+                            this.cena.assets.img("rock2"),
                             c * this.SIZE,
                             l * this.SIZE,
                             this.SIZE,
@@ -35,7 +35,7 @@ export default class Mapa {
                         break;
                     case 2:
                         ctx.drawImage(
-                            this.cena.assets.img("rock2"),
+                            this.cena.assets.img("rock"),
                             c * this.SIZE,
                             l * this.SIZE,
                             this.SIZE,
