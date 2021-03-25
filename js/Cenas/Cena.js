@@ -17,8 +17,10 @@ export default class Cena {
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.mapa?.desenhar(this.ctx);
         if (this.assets.acabou()) {
-            for (let s = 0; s < this.sprites.length; s++) {
-                const sprite = this.sprites[s];
+            let drawSprites = this.sprites.slice();
+            drawSprites.sort((a,b)=>a.y-b.y);
+            for (let s = 0; s < drawSprites.length; s++) {
+                const sprite = drawSprites[s];
                 sprite.desenhar(this.ctx);
                 sprite.aplicaRestricoes();
             }
@@ -43,7 +45,6 @@ export default class Cena {
         this.dt = (t - this.t0) / 1000;
         this.passo(this.dt);
         this.desenhar();
-        // this.sprites.sort((a,b)=>a.y-b.y);
         this.checaColisao();
         this.removerSprites();
         if(this.rodando){
